@@ -1,16 +1,15 @@
 const cacheName = "sw_site_1";
 
 const cacheAssets = [
-  "/vinsly.github.io",
-  "/vinsly.github.io/",
-  "/vinsly.github.io/index.html",
-  "/vinsly.github.io/css/style.css",
-  "/vinsly.github.io/js/index.js",
-  "/vinsly.github.io/image/pixel.gif",
+  "/",
+  "/index.html",
+  "/css/style.css",
+  "/js/index.js",
+  "/image/pixel.gif",
 ];
 
 self.addEventListener("install", (e) => {
-  console.log("installed");
+  console.log("installed", e);
   e.waitUntil(
     caches
       .open(cacheName)
@@ -69,9 +68,7 @@ self.addEventListener("fetch", (e) => {
           });
           return res;
         })
-        .catch(() =>
-          caches.match("https://service-worker.github.io/image/pixel.gif")
-        );
+        .catch(() => caches.match(e.request).then((res) => res));
     })
   );
 });
