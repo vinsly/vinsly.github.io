@@ -1,7 +1,21 @@
 const cacheName = "sw_site_1";
 
+const cacheAssets = [
+  "/vinsly.github.io",
+  "/vinsly.github.io/",
+  "/vinsly.github.io/index.html",
+  "/vinsly.github.io/css/style.css",
+  "/vinsly.github.io/js/index.js",
+  "/vinsly.github.io/image/pixel.gif",
+];
+
 self.addEventListener("install", (e) => {
   console.log("installed");
+  e.waitUntil(
+    caches
+      .open(cacheName)
+      .then((cache) => cache.addAll(cacheAssets).then(self.skipWaiting()))
+  );
 });
 
 self.addEventListener("activate", (e) => {
